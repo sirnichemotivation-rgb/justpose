@@ -7,46 +7,39 @@
     <script src="https://product-gallery.cloudinary.com/all.js" type="text/javascript"></script>
     <style>
         :root { --accent: #00f2ff; }
-        body { background: #000; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; }
-        .header { 
-            padding: 15px; text-align: center; background: #0a0a0a; 
-            border-bottom: 1px solid var(--accent); position: sticky; top: 0; z-index: 100;
-        }
-        h1 { margin: 0; font-size: 1.2rem; color: var(--accent); letter-spacing: 3px; }
-        #event-name { font-size: 0.7rem; color: #666; text-transform: uppercase; }
+        body { background: #000; color: white; font-family: sans-serif; margin: 0; }
+        .header { padding: 15px; text-align: center; border-bottom: 1px solid #222; background: #000; position: sticky; top: 0; z-index: 100; }
+        h1 { margin: 0; font-size: 1.2rem; color: var(--accent); letter-spacing: 2px; }
+        #gallery-container { width: 100%; max-width: 600px; margin: 0 auto; height: 85vh; }
         
-        #gallery-container { width: 100%; max-width: 600px; margin: 0 auto; height: 90vh; }
-        
-        /* Custom "X" button style para sa Zoom */
-        .pg-base .pg-zoom-close-btn { background-color: var(--accent) !important; color: black !important; border-radius: 50%; }
+        /* ALIS BORDER FIX */
+        .pg-base { background: #000 !important; }
+        .pg-item { border: none !important; padding: 0 !important; }
+        .pg-zoom-close-btn { background: var(--accent) !important; color: black !important; }
     </style>
 </head>
 <body>
     <div class="header">
-        <div id="event-name">Loading...</div>
+        <div id="event-name" style="font-size: 0.7rem; color: #444;">SYNCING...</div>
         <h1>JUSTPOSE STUDIO</h1>
     </div>
-    <div id="gallery-container">
-        <div id="my-gallery"></div>
-    </div>
-
+    <div id="gallery-container"><div id="my-gallery"></div></div>
     <script type="text/javascript">
         const params = new URLSearchParams(window.location.search);
         const tag = params.get('id');
-        const event = params.get('event') || "Our Event";
-        document.getElementById('event-name').innerText = decodeURIComponent(event);
-
+        document.getElementById('event-name').innerText = decodeURIComponent(params.get('event') || "EVENT");
         if (tag) {
             cloudinary.galleryWidget({
                 container: "#my-gallery",
                 cloudName: "dntrwkexp",
                 mediaAssets: [{ tag: tag }],
                 displayProps: { mode: "classic", columns: 1 },
-                zoomProps: { type: "popup" }, // Eto yung may 'X' button pag clinick ang photo
-                aspectRatio: "1:1",
+                zoomProps: { type: "popup" },
                 maxAssets: 50,
+                aspectRatio: "1:1",
                 navigation: "always",
-                themeProps: { primary: "#00f2ff" }
+                // TANGGAL BORDER AT PADDING
+                styles: { palette: { primary: "#00f2ff", active: "#ffffff" } }
             }).render();
         }
     </script>
