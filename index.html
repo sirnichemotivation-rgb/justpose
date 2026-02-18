@@ -3,60 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Justpose Studio | v34</title>
+    <title>Justpose Studio | v35</title>
     <script src="https://product-gallery.cloudinary.com/all.js" type="text/javascript"></script>
     <style>
         :root { --accent: #00f2ff; }
-        body { background: #000; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; }
+        body { background: #000; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         
-        /* DESIGNED HEADER */
+        /* ADJUSTED HEADER - LOWERED & SMALLER */
         .header { 
-            padding: 30px 10px; 
-            border-bottom: 2px solid var(--accent); 
-            background: linear-gradient(180deg, #111 0%, #000 100%);
+            padding: 20px 0; 
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
+            background: #000;
+            border-bottom: 1px solid #222;
         }
         h1 { 
             margin: 0; 
-            font-size: 2.2rem; 
+            font-size: 1.5rem; 
             color: var(--accent); 
-            letter-spacing: 8px; 
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0, 242, 255, 0.7);
+            letter-spacing: 5px; 
+            text-shadow: 0 0 8px rgba(0, 242, 255, 0.5);
         }
 
-        #gallery-container { width: 100%; max-width: 600px; margin: 0 auto; padding-top: 20px; }
-        
-        /* DOWNLOAD BUTTON OVERLAY */
-        .download-btn {
-            background: var(--accent);
-            color: black;
-            padding: 12px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-            margin: 20px 0;
-            transition: transform 0.2s;
-        }
-        .download-btn:active { transform: scale(0.9); }
+        #gallery-container { width: 100%; max-width: 500px; margin: 0 auto; min-height: 500px; }
+        .instruction { color: #666; font-size: 0.8rem; text-align: center; margin: 10px 0; }
 
-        /* CLEAN GALLERY - NO BORDERS */
-        .pg-base, .pg-item, .pg-wrapper { 
-            background: #000 !important; 
-            border: none !important; 
-            box-shadow: none !important; 
-        }
+        /* REMOVE CLUTTER */
+        .pg-base { background: #000 !important; }
     </style>
 </head>
 <body>
     <div class="header"><h1>JUSTPOSE STUDIO</h1></div>
+    <div class="instruction">Tap media to view & download</div>
     
     <div id="gallery-container">
-        <div style="text-align:center;">
-            <p style="color:#555; font-size: 0.8rem;">Tap media to view full size & download</p>
-        </div>
         <div id="my-gallery"></div>
     </div>
 
@@ -66,12 +45,8 @@
             cloudinary.galleryWidget({
                 container: "#my-gallery",
                 cloudName: "dntrwkexp",
-                mediaAssets: [
-                    { tag: tag, mediaType: "image" },
-                    { tag: tag, mediaType: "video" }
-                ],
-                displayProps: { mode: "classic", columns: 1, spacing: 10 },
-                zoomProps: { type: "popup" },
+                mediaAssets: [{ tag: tag, mediaType: "all" }], // This forces images + video
+                displayProps: { mode: "classic", columns: 1, spacing: 5 },
                 aspectRatio: "1:1",
                 videoProps: { autoplay: true, loop: true, controls: "for_video" },
                 styles: { palette: { primary: "#00f2ff", active: "#ffffff" } }
