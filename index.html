@@ -3,51 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Justpose Studio | v39</title>
+    <title>Justpose Studio | v41</title>
     <script src="https://product-gallery.cloudinary.com/all.js" type="text/javascript"></script>
     <style>
         :root { --accent: #00f2ff; }
-        body { background: #000; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        
-        /* PINALAKI ANG HEADER AT IBINABA */
-        .header { padding: 60px 10px 20px 10px; text-align: center; border-bottom: 1px solid #111; }
-        h1 { margin: 0; font-size: 2.5rem; color: var(--accent); letter-spacing: 10px; text-shadow: 0 0 15px var(--accent); }
-        
-        .status-msg { color: #888; text-align: center; font-size: 0.8rem; margin: 15px 0; }
-
-        #gallery-container { width: 100%; max-width: 500px; margin: 0 auto; min-height: 500px; }
+        body { background: #000; color: white; font-family: sans-serif; margin: 0; padding: 0; }
+        .header { padding: 50px 10px 20px 10px; text-align: center; }
+        h1 { margin: 0; font-size: 2.5rem; color: var(--accent); letter-spacing: 8px; }
+        #gallery-container { width: 100%; max-width: 500px; margin: 0 auto; min-height: 600px; }
     </style>
 </head>
 <body>
     <div class="header"><h1>JUSTPOSE STUDIO</h1></div>
-    <div class="status-msg">If images are missing, please refresh the page.</div>
-
-    <div id="gallery-container">
-        <div id="my-gallery"></div>
-    </div>
+    <div id="gallery-container"><div id="my-gallery"></div></div>
 
     <script type="text/javascript">
-        // Kunin ang ID sa URL
-        const params = new URLSearchParams(window.location.search);
-        const tag = params.get('id');
-
+        const tag = new URLSearchParams(window.location.search).get('id');
         if (tag) {
             cloudinary.galleryWidget({
                 container: "#my-gallery",
                 cloudName: "dntrwkexp",
                 mediaAssets: [
-                    { tag: tag, mediaType: "image" },
-                    { tag: tag, mediaType: "video" }
+                    { tag: tag, mediaType: "image" }, // Pilitin ang images
+                    { tag: tag, mediaType: "video" }  // Pilitin ang videos
                 ],
                 displayProps: { mode: "classic", columns: 1, spacing: 10 },
                 aspectRatio: "1:1",
-                // Zoom settings para makapag-download (Long Press)
-                zoomProps: { type: "popup", viewer: "full" },
-                // Transformation para mapabilis ang loading
-                transformation: { crop: "limit", width: 1200, quality: "auto" }
+                zoomProps: { type: "popup" },
+                // Transformation para pabilisin ang loading
+                transformation: { quality: "auto", fetch_format: "auto" }
             }).render();
-        } else {
-            document.querySelector('.status-msg').innerHTML = "ERROR: NO SESSION ID FOUND";
         }
     </script>
 </body>
