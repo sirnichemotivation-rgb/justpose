@@ -3,40 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Justpose Studio | Fix v33</title>
+    <title>Justpose Studio | Pro v31</title>
     <script src="https://product-gallery.cloudinary.com/all.js" type="text/javascript"></script>
     <style>
-        body { background-color: #000; margin: 0; padding: 0; overflow-x: hidden; }
-        .header { padding: 15px; text-align: center; background: #000; border-bottom: 1px solid #111; position: relative; z-index: 10; }
-        h1 { color: #00f2ff; font-family: sans-serif; font-size: 1.2rem; letter-spacing: 2px; margin: 0; }
-        #my-gallery { width: 100%; max-width: 600px; margin: 0 auto; min-height: 400px; }
-        /* Siguradong walang white space o black overlap */
-        .pg-base { background-color: #000 !important; }
+        :root { --accent: #00f2ff; }
+        body { background: #000; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; }
+        .header { padding: 15px; border-bottom: 1px solid #111; background: #000; text-align: center; }
+        h1 { margin: 0; font-size: 1.1rem; color: var(--accent); letter-spacing: 3px; }
+        #gallery-container { width: 100%; max-width: 500px; margin: 0 auto; }
+        /* FORCE REMOVE ALL BORDERS */
+        .pg-base, .pg-item, .pg-wrapper { background: #000 !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
+        .pg-zoom-close-btn { background: var(--accent) !important; color: #000 !important; border-radius: 50%; }
     </style>
 </head>
 <body>
     <div class="header"><h1>JUSTPOSE STUDIO</h1></div>
-    <div id="my-gallery"></div>
-
+    <div id="gallery-container"><div id="my-gallery"></div></div>
     <script type="text/javascript">
-        const params = new URLSearchParams(window.location.search);
-        const tag = params.get('id');
-
+        const tag = new URLSearchParams(window.location.search).get('id');
         if (tag) {
-            const myWidget = cloudinary.galleryWidget({
+            cloudinary.galleryWidget({
                 container: "#my-gallery",
                 cloudName: "dntrwkexp",
-                mediaAssets: [
-                    { tag: tag, mediaType: "image" }, // Load images
-                    { tag: tag, mediaType: "video" }  // Load videos
-                ],
+                mediaAssets: [{ tag: tag }],
                 displayProps: { mode: "classic", columns: 1, spacing: 0 },
                 zoomProps: { type: "popup" },
                 aspectRatio: "1:1",
-                videoProps: { autoplay: true, loop: true, controls: "for_video" },
                 styles: { palette: { primary: "#00f2ff", active: "#ffffff" } }
-            });
-            myWidget.render();
+            }).render();
         }
     </script>
 </body>
