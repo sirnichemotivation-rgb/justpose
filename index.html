@@ -3,53 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Justpose Galaxy Gallery</title>
+    <title>Justpose Studio | Gallery</title>
     <script src="https://product-gallery.cloudinary.com/all.js" type="text/javascript"></script>
     <style>
-        :root { --cyan: #00f2ff; }
-        body { 
-            background: #000 url('https://www.transparenttextures.com/patterns/stardust.png'); 
-            color: white; font-family: 'Segoe UI', sans-serif; margin: 0; 
-        }
-        .header { 
-            padding: 25px; text-align: center; background: rgba(0,0,0,0.8);
-            border-bottom: 2px solid var(--cyan); box-shadow: 0 0 20px rgba(0,242,255,0.3);
-        }
-        h1 { margin: 0; font-size: 1.5rem; letter-spacing: 5px; color: var(--cyan); text-shadow: 0 0 10px var(--cyan); }
+        body { background: #000; color: #00f2ff; font-family: sans-serif; margin: 0; overflow-x: hidden; }
+        .header { padding: 20px; text-align: center; border-bottom: 1px solid #111; }
+        h1 { margin: 0; font-size: 1.4rem; letter-spacing: 4px; }
+        #gallery-container { width: 100%; max-width: 500px; margin: 0 auto; }
         
-        #gallery-container { width: 100%; max-width: 500px; margin: 0 auto; min-height: 90vh; }
-
-        /* TANGGAL WHITE BORDER AT SHADOWS */
-        .pg-base { background-color: transparent !important; }
-        .pg-item { 
-            background-color: transparent !important; 
-            border: none !important; 
-            box-shadow: none !important; 
-            padding: 0 !important; 
-            margin-bottom: 5px !important;
-        }
-        .pg-zoom-modal { background: rgba(0,0,0,0.98) !important; }
-        .pg-zoom-close-btn { 
-            background: var(--cyan) !important; color: #000 !important; 
-            border-radius: 50%; padding: 5px; font-weight: bold;
-        }
+        /* THE ULTIMATE NO-BORDER FIX */
+        .pg-base, .pg-item, .pg-wrapper { background: #000 !important; border: none !important; box-shadow: none !important; }
+        canvas { display: none !important; } /* Alis white flash */
+        .pg-zoom-close-btn { background: #00f2ff !important; color: #000 !important; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div id="event-name" style="font-size: 0.8rem; color: #888; margin-bottom: 5px;">COLLECTING MEMORIES</div>
-        <h1>JUSTPOSE STUDIO</h1>
-    </div>
-
-    <div id="gallery-container">
-        <div id="my-gallery"></div>
-    </div>
-
+    <div class="header"><h1>JUSTPOSE STUDIO</h1></div>
+    <div id="gallery-container"><div id="my-gallery"></div></div>
     <script type="text/javascript">
-        const params = new URLSearchParams(window.location.search);
-        const tag = params.get('id');
-        document.getElementById('event-name').innerText = decodeURIComponent(params.get('event') || "LIVE GALLERY");
-
+        const tag = new URLSearchParams(window.location.search).get('id');
         if (tag) {
             cloudinary.galleryWidget({
                 container: "#my-gallery",
@@ -58,7 +30,6 @@
                 displayProps: { mode: "classic", columns: 1, spacing: 0 },
                 zoomProps: { type: "popup" },
                 aspectRatio: "1:1",
-                navigation: "always",
                 styles: { palette: { primary: "#00f2ff", active: "#ffffff" } }
             }).render();
         }
