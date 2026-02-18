@@ -8,43 +8,35 @@
     <style>
         :root { --accent: #00f2ff; }
         body { background: #050505; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
-        .glass-header { 
-            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
-            padding: 25px; border-bottom: 1px solid rgba(0, 242, 255, 0.2);
-        }
+        .glass-header { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); padding: 25px; border-bottom: 1px solid var(--accent); }
         #event-display { font-size: 0.8rem; color: #888; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
         h1 { margin: 0; font-size: 1.6rem; letter-spacing: 5px; color: var(--accent); text-shadow: 0 0 15px rgba(0,242,255,0.5); }
-        #my-gallery { width: 100%; height: 75vh; margin-top: 10px; }
-        .refresh-hint { font-size: 0.7rem; color: #444; margin-top: 10px; }
+        #my-gallery { width: 100%; height: 80vh; }
     </style>
 </head>
 <body>
     <div class="glass-header">
-        <div id="event-display">Loading Event...</div>
+        <div id="event-display">Loading Gallery...</div>
         <h1>JUSTPOSE STUDIO</h1>
     </div>
-
     <div id="my-gallery"></div>
-    <div class="refresh-hint">Pull down to refresh if photos are missing</div>
-
     <script type="text/javascript">
-        const urlParams = new URLSearchParams(window.location.search);
-        const tag = urlParams.get('id');
-        const eventName = urlParams.get('event') || "Our Special Event";
-
-        document.getElementById('event-display').innerText = decodeURIComponent(eventName);
+        const params = new URLSearchParams(window.location.search);
+        const tag = params.get('id');
+        const event = params.get('event') || "OUR SPECIAL EVENT";
+        document.getElementById('event-display').innerText = decodeURIComponent(event);
 
         if (tag) {
             cloudinary.galleryWidget({
                 container: "#my-gallery",
                 cloudName: "dntrwkexp",
-                mediaAssets: [{ tag: tag }],
-                displayProps: { mode: "classic", columns: 1 },
-                styles: {
-                    palette: { primary: "#00f2ff", active: "#ffffff" },
-                    expansion: { background: "#000000" }
-                }
+                mediaAssets: [{ tag: tag }], // Tinanggal ang strict mediaType para lumabas agad
+                zoomProps: { type: "popup" },
+                aspectRatio: "1:1",
+                navigation: "always"
             }).render();
+        } else {
+            document.getElementById('event-display').innerText = "SCAN QR CODE TO VIEW PHOTOS";
         }
     </script>
 </body>
